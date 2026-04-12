@@ -9,7 +9,9 @@ expect:{
 reporter:'html',
 use:{
 
-  browserName:'firefox'
+  browserName:'chromium',
+  headless:false,
+
 }
 
 
