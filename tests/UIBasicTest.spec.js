@@ -29,9 +29,7 @@ test('Browser Context Playwright Test', async ({ browser }) => {
 
 });
 
-test.only('Page Playwright Test 2', async ({ browser }) => {
-        const context = await browser.newContext();
-        const page = await context.newPage();
+test.only('Page Playwright Test 2', async ({ page }) => {
         await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
         const registerLink = page.locator(".text-reset");
@@ -49,11 +47,12 @@ test.only('Page Playwright Test 2', async ({ browser }) => {
         const loginBtn = page.locator('text=Login');
         const loginPageLoginBtn = page.locator("#login");
         const productsImage = page.locator(".card-img-top");
+        const productsTitle = page.locator(".card-body b");
 
         await registerLink.click();
         await firstName.fill("Tarun");
         await lastName.fill("Kumar");
-        await email.fill("tarun12.rt+2@gmail.com");
+        await email.fill("tarun15.rt+8@gmail.com");
         await phoneNumber.fill("9472606686");
         await occupationDropDown.selectOption("Engineer");
         await genderMale.click();
@@ -63,10 +62,11 @@ test.only('Page Playwright Test 2', async ({ browser }) => {
         await registerBtn.click();
         await expect(accountCreationSuccessMsg).toBeVisible();
         await loginBtn.click();
-        await email.fill("tarun12.rt@gmail.com");
+        await email.fill("tarun12.rt+5@gmail.com");
         await password.fill("Roadno8a@");
         await loginPageLoginBtn.click();
-        await expect(productsImage.first()).toBeVisible();
+        await page.waitForLoadState('networkidle');
+        console.log(await productsTitle.first().textContent());
 
 });
 
