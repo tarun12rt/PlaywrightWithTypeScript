@@ -29,7 +29,7 @@ test('Browser Context Playwright Test', async ({ browser }) => {
 
 });
 
-test.only('Page Playwright Test 2', async ({ page }) => {
+test('Page Playwright Test 2', async ({ page }) => {
         await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
         const registerLink = page.locator(".text-reset");
@@ -62,7 +62,7 @@ test.only('Page Playwright Test 2', async ({ page }) => {
         await registerBtn.click();
         await expect(accountCreationSuccessMsg).toBeVisible();
         await loginBtn.click();
-        await email.fill("tarun12.rt+5@gmail.com");
+        await email.fill("tarun15.rt+8@gmail.com");
         await password.fill("Roadno8a@");
         await loginPageLoginBtn.click();
         await page.waitForLoadState('networkidle');
@@ -77,3 +77,26 @@ test('Page Playwright Test', async ({ page }) => {
         await expect(page).toHaveTitle("Google");
 
 });
+
+test.only('UI Controls', async ({ page})=>{
+        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+
+         const userName = page.locator("#username");
+        const password = page.locator("[name='password']");
+        const signInBtn = page.locator("#signInBtn");
+        const userCheckBox = page.locator("[value='user']+.checkmark");
+        const blinkingText = page.locator("div [href*='documents-request']");
+
+         await page.locator("#username").fill("rahulshettyacademy");
+        await page.locator("[name='password']").fill("Learning@830$3mK2");
+        await userCheckBox.click();
+        await page.locator("#okayBtn").click();
+        await expect(userCheckBox).toBeChecked();
+        await page.locator("select.form-control").selectOption("consult");
+        await page.locator("#terms").click();
+        await expect(page.locator("#terms")).toBeChecked();
+        await page.locator("#terms").uncheck();
+        expect(await page.locator("#terms").isChecked()).toBeFalsy();
+        expect(blinkingText).toHaveAttribute("class","blinkingText");
+        
+})
