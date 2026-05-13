@@ -78,7 +78,7 @@ test('Page Playwright Test', async ({ page }) => {
 
 });
 
-test.only('UI Controls', async ({ page})=>{
+test('UI Controls', async ({ page})=>{
         await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 
          const userName = page.locator("#username");
@@ -99,4 +99,25 @@ test.only('UI Controls', async ({ page})=>{
         expect(await page.locator("#terms").isChecked()).toBeFalsy();
         expect(blinkingText).toHaveAttribute("class","blinkingText");
         
+})
+
+test.only('Child Window Handling',async({browser})=>{
+        const context = await browser.newContext();
+        const page = await context.newPage();   
+        const blinkingText = page.locator("div [href*='documents-request']");
+        const userName = page.locator("#username");
+        const password = page.locator("[name='password']");
+        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+
+        const [newPage] = await Promise.all(
+        [context.waitForEvent("page"),
+         blinkingText.click()]);
+
+         const text = await newPage.locator("p.red").textContent();
+         const email = text.split("@")[1];
+         const domain = email.split(" ")[0];
+         console.log(domain);
+         await page.locator("#username").fill(domain);
+         await page.locator("[name='password']").fill("Learning@830$3mK2");
+
 })
