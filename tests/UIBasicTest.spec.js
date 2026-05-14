@@ -52,7 +52,7 @@ test('Page Playwright Test 2', async ({ page }) => {
         await registerLink.click();
         await firstName.fill("Tarun");
         await lastName.fill("Kumar");
-        await email.fill("tarun15.rt+8@gmail.com");
+        await email.fill("tarun14.rt@gmail.com");
         await phoneNumber.fill("9472606686");
         await occupationDropDown.selectOption("Engineer");
         await genderMale.click();
@@ -62,7 +62,7 @@ test('Page Playwright Test 2', async ({ page }) => {
         await registerBtn.click();
         await expect(accountCreationSuccessMsg).toBeVisible();
         await loginBtn.click();
-        await email.fill("tarun15.rt+8@gmail.com");
+        await email.fill("tarun14.rt@gmail.com");
         await password.fill("Roadno8a@");
         await loginPageLoginBtn.click();
         await page.waitForLoadState('networkidle');
@@ -101,7 +101,7 @@ test('UI Controls', async ({ page})=>{
         
 })
 
-test.only('Child Window Handling',async({browser})=>{
+test('Child Window Handling',async({browser})=>{
         const context = await browser.newContext();
         const page = await context.newPage();   
         const blinkingText = page.locator("div [href*='documents-request']");
