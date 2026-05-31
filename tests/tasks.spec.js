@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.only('Add to cart',async({page})=>{
+test('Add to cart',async({page})=>{
         await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
         const userEmail = "tarun14.rt@gmail.com";
         const body = page.locator("#products .card-body");
@@ -66,16 +66,32 @@ test.only('Add to cart',async({page})=>{
                 break;
             }
         }
-
-        await page.pause();
-
         expect(page.locator(".details__user label[type='text']")).toHaveText(userEmail);
         await page.locator(".action__submit").click();
 
         await page.locator(".hero-primary").waitFor();
         await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
 
+        const orderId= await page.locator("tr label.ng-star-inserted").textContent()
+        console.log(orderId);
         
+        await page.locator("button[routerlink='/dashboard/myorders']").click();
+        await page.locator("tbody").waitFor();
+
+        const rows = page.locator("tbody tr");
+
+        for(let i=0; i< await rows.count(); ++i){
+            const rowOrderID = await rows.nth(i).locator("th").textContent();
+            if(orderId.includes(rowOrderID)){
+                await rows.nth(i).locator("button").first().click();
+                break;
+            }
+        }
+
+        // await page.locator("p.tagline").waitFor();
+
+        const orderDetails = await page.locator("div.col-text").textContent();
+        expect(orderId.includes(orderDetails)).toBeTruthy();
 
 
     })
